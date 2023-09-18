@@ -1,0 +1,128 @@
+@use '../../../../common/styles/utils/mixins' as *;
+
+.bookCard {
+  display: grid;
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 20px;
+    border: 1px solid var(--color-page);
+    border-radius: 30px;
+
+    color: inherit;
+    text-decoration: none;
+
+    @include hover(box-shadow, (0 9px 18px var(--color-page)));
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &__cover {
+    position: relative;
+    height: 0;
+    width: 50%;
+    padding-bottom: 75%;
+
+    margin-bottom: 12px;
+    @include hover(transform, scale(1.05));
+
+    @include onTablet {
+      width: 100%;
+      padding-bottom: 150%;
+
+      margin-bottom: 32px;
+    }
+  }
+
+  &__photo {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    border-radius: 26px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &__title {
+    margin: 0 0 8px;
+
+    font-size: 20px;
+    line-height: 120%;
+    font-weight: 800;
+    letter-spacing: -1px;
+    text-align: center;
+
+    @include onTablet {
+      font-size: 24px;
+      line-height: 140%;
+      letter-spacing: normal;
+    }
+  }
+
+  &__author {
+    margin: 0 0 16px;
+
+    font-size: 18px;
+    line-height: 120%;
+    letter-spacing: -1px;
+    text-align: center;
+
+    @include onTablet {
+      font-size: 20px;
+      line-height: 140%;
+      letter-spacing: normal;
+    }
+  }
+
+  &__rating {
+    --star-size: 30px;
+    --star-color: #ccc;
+    --star-background: #fc0;
+    --percent: calc(var(--rating) / 5 * 100%);
+
+    display: inline-block;
+    font-family: Times; // make sure ★ appears correctly
+    font-size: var(--star-size);
+    line-height: 1;
+
+    &::before {
+      content: '★★★★★';
+      letter-spacing: 3px;
+      background: linear-gradient(
+        90deg,
+        var(--star-background) var(--percent),
+        var(--star-color) var(--percent)
+      );
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  &__reviews {
+    margin: 0;
+    font-size: 16px;
+  }
+
+  &__description {
+    margin: 0;
+
+    letter-spacing: -1px;
+
+    // #region Limit text length to 'n' lines:
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    // #endregion
+
+    @include onTablet {
+      letter-spacing: normal;
+    }
+  }
+}

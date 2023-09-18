@@ -1,0 +1,51 @@
+@use '../../../../common/styles/utils/mixins' as *;
+
+.contacts {
+  &__info {
+    margin: 0 0 24px;
+
+    &--last {
+      margin-bottom: 0;
+    }
+  }
+
+  &__info-title {
+    margin: 0 0 8px;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 140%;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  &__info-link {
+    font-weight: 400;
+    color: inherit;
+    text-decoration: none;
+    white-space: pre-line;
+
+    @include hover(color, lightblue);
+  }
+
+  &__info-icons {
+    display: flex;
+    gap: 32px;
+  }
+
+  &__field {
+    margin: 0 0 16px;
+
+    &--last {
+      margin-bottom: 32px;
+    }
+  }
+
+  &__button {
+    margin-bottom: 48px;
+
+    @include onTablet {
+      margin-bottom: 0;
+    }
+  }
+}

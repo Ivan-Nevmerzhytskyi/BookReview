@@ -1,0 +1,94 @@
+@use '../../../../common/styles/utils/variables' as *;
+@use '../../../../common/styles/utils/mixins' as *;
+
+.booksSortAndGroup {
+  display: grid;
+  gap: 15px;
+
+  @include onTablet {
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+  }
+
+  &__sort-by {
+    position: relative;
+  }
+
+  &__trigger {
+    all: unset;
+    outline: revert;
+
+    display: inline-block;
+    width: max-content;
+    padding: 5px 15px;
+    background-color: var(--color-page);
+    border-radius: 40px;
+
+    color: var(--bg-page);
+    font-size: 16px;
+    line-height: 22px;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    cursor: pointer;
+    transition: box-shadow $effectDuration;
+
+    &:hover {
+      box-shadow: 3px 3px 20px var(--color-page);
+    }
+
+    &--active {
+      background-color: rgb(62, 142, 208);
+    }
+  }
+
+  &__dropdown-content {
+    position: absolute;
+    z-index: 1;
+    margin-top: 5px;
+    padding: 5px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    border-radius: 15px;
+    background-color: var(--color-page);
+    box-shadow: 3px 3px 20px var(--color-page);
+
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-20px);
+    transition: opacity $effectDuration, transform $effectDuration;
+
+    &--visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+  }
+
+  &__dropdown-element {
+    padding: 5px 25px;
+
+    background-color: var(--bg-page);
+    border-radius: 40px;
+
+    color: var(--color-page);
+    font-size: 16px;
+    line-height: 22px;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+
+    transition: box-shadow $effectDuration;
+
+    &:hover {
+      box-shadow: 3px 3px 20px var(--bg-page);
+    }
+  }
+
+  &__group-by {
+    display: flex;
+  }
+}

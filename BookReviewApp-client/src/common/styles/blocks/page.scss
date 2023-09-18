@@ -1,0 +1,61 @@
+@use '../utils/variables' as *;
+
+.page {
+  --color-page: #{$main-text-color};
+  --bg-page: #{$main-bg-color};
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  color: var(--color-page);
+  background-color: $header_footer-bg-color;
+
+  scroll-behavior: smooth;
+  transition: color $effectDuration, background-color $effectDuration;
+
+  &--theme--dark {
+    --color-page: #{$dark-theme-text-color};
+    --bg-page: #{$dark-theme-bg-color};
+  }
+
+  &__body {
+    &--with-menu {
+      overflow: hidden;
+    }
+  }
+
+  &__content {
+    min-width: 320px;
+    // #region To stick footer to the bottom of the page:
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    // #endregion
+  }
+
+  &__main {
+    // #region To stick footer to the bottom of the page:
+    flex-grow: 1;
+    // #endregion
+  }
+
+  &__menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+
+    transition: all $effectDuration;
+    opacity: 0;
+    transform: translateX(-100%);
+    pointer-events: none;
+
+    &--target {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: all;
+    }
+  }
+}

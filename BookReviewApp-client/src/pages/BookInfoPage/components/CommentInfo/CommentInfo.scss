@@ -1,0 +1,22 @@
+@use '../../../../common/styles/utils/mixins' as *;
+
+.commentInfo {
+  &__title {
+  }
+
+  &__name {
+  }
+
+  &__email {
+  }
+
+  &__body {
+  }
+
+  &__vote {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 5px;
+  }
+}

@@ -1,0 +1,17 @@
+/* #region reset */
+/* Local or external Reset CSS*/
+/* Not supported by the BEM methodology (but preferred) */
+body,
+h1,
+h2,
+h3,
+ul,
+p {
+  margin: 0;
+}
+/* #endregion */
+
+// Hide linter mistakes and error:
+// iframe {
+//   display: none;
+// }

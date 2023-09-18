@@ -1,0 +1,33 @@
+@use '../../common/styles/utils/mixins' as *;
+
+.collection {
+  background-color: var(--bg-page);
+  border-radius: 50px 50px 0 0;
+
+  &__content {
+    display: grid;
+    row-gap: 10px;
+    padding-block: 96px;
+
+    @include onTablet {
+      padding-block: 120px;
+    }
+  }
+
+  &__books {
+    @include pageGrid;
+    row-gap: 40px;
+  }
+
+  &__book {
+    grid-column: 1 / -1;
+
+    @include onTablet {
+      grid-column: span 3;
+    }
+
+    @include onDesktop {
+      grid-column: span 4;
+    }
+  }
+}

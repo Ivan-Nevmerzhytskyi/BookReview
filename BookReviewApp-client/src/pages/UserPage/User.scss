@@ -1,0 +1,31 @@
+@use '../../common/styles/utils/variables' as *;
+@use '../../common/styles/utils/mixins' as *;
+
+.user {
+  padding-block: 96px;
+  background-color: var(--bg-page);
+  border-radius: 50px 50px 0 0;
+
+  @include onTablet {
+    padding-block: 120px;
+  }
+
+  &__content {
+    @include pageGrid;
+  }
+
+  &__link {
+    font-size: 22px;
+    line-height: 22px;
+
+    grid-column: 1 / -1;
+
+    @include onTablet {
+      grid-column: span 3;
+    }
+
+    @include onDesktop {
+      grid-column: span 4;
+    }
+  }
+}

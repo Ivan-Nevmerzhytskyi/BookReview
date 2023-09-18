@@ -1,0 +1,51 @@
+@use '../../common/styles/utils/mixins' as *;
+
+.addBook {
+  padding-block: 96px;
+  background-color: var(--bg-page);
+  border-radius: 50px 50px 0 0;
+
+  @include onTablet {
+    padding-block: 120px;
+  }
+
+  &__content {
+    @include pageGrid;
+  }
+
+  &__form {
+    grid-column: 1 / -1;
+
+    @include onTablet {
+      grid-column: 2 / -2;
+    }
+
+    @include onDesktop {
+      grid-column: 4 / -4;
+    }
+  }
+
+  &__label {
+    display: inline-block;
+    padding: 0 15px 5px;
+    white-space: pre-line;
+    cursor: pointer;
+  }
+
+  &__field {
+    margin: 0 0 16px;
+
+    &--file {
+      display: none;
+    }
+  }
+
+  &__button {
+    margin: 32px 0 0;
+  }
+
+  &__error {
+    color: red;
+    font-weight: bold;
+  }
+}

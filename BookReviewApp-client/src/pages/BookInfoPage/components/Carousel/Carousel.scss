@@ -1,0 +1,107 @@
+.carousel {
+  box-sizing: border-box;
+  width: 50%;
+
+  padding: 10px 40px;
+  border: 1px solid #000;
+  border-radius: 15px;
+  background: #ddd;
+
+  &__content {
+    position: relative;
+
+    display: grid;
+    gap: 10px;
+  }
+
+  &__slides {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__slide {
+    display: none;
+    position: relative;
+    padding-bottom: 150%;
+    height: 0;
+  }
+
+  &__slide-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &__slide-number {
+    position: absolute;
+    top: 0;
+    padding: 8px 12px;
+
+    color: #fff;
+    font-size: 12px;
+  }
+
+  &__arrow {
+    position: absolute;
+    top: 40%;
+    padding: 16px;
+
+    background: none;
+    border: none;
+
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    user-select: none;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+      cursor: pointer;
+    }
+
+    &--prev {
+      left: 0;
+      border-radius: 0 10px 10px 0;
+    }
+
+    &--next {
+      right: 0;
+      border-radius: 10px 0 0 10px;
+    }
+  }
+
+  &__icons {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  }
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+
+    cursor: pointer;
+    opacity: 0.6;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &--active {
+      opacity: 1;
+    }
+  }
+
+  &__icon-image {
+    width: 50%;
+    object-fit: cover;
+    object-position: center;
+  }
+}

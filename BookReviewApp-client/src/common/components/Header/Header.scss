@@ -1,0 +1,42 @@
+@use '../../styles/utils/mixins' as *;
+
+.header {
+  background-image: url(../../../images/header-bg.jpeg);
+  background-size: cover;
+  background-position: center;
+  border-radius: 0 0 50px 50px;
+
+  &__content {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__bottom {
+    padding-bottom: 40px;
+
+    @include onTablet {
+      padding-bottom: 54px;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    font-style: italic;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 100%;
+    letter-spacing: -1.5px;
+    text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em yellow;
+
+    @include onTablet {
+      font-size: 40px;
+    }
+
+    @include onDesktop {
+      font-size: 50px;
+    }
+  }
+}

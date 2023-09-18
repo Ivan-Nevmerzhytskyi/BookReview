@@ -1,0 +1,10 @@
+@use '../../common/styles/utils/mixins' as *;
+
+.notFound {
+  padding-block: 96px;
+  background-color: var(--bg-page);
+
+  @include onTablet {
+    padding-block: 120px;
+  }
+}

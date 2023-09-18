@@ -1,0 +1,45 @@
+.rate {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 0 10px;
+
+  &__star-label {
+    font-size: 30px;
+    color: #ccc;
+    cursor: pointer;
+
+    &::before {
+      content: '★';
+    }
+
+    &:hover,
+    &:hover ~ & {
+      color: #deb217;
+    }
+  }
+
+  &__star {
+    height: 0;
+    width: 0;
+    padding: 0;
+    margin: 0;
+
+    &:focus + &-label {
+      outline: 1px solid;
+    }
+
+    &:disabled + &-label {
+      pointer-events: none;
+    }
+
+    &:checked ~ &-label {
+      color: #ffc700;
+    }
+  }
+
+  input:checked ~ label:hover,
+  input:checked ~ label:hover ~ label,
+  label:hover ~ input:checked ~ label {
+    color: #c59b08;
+  }
+}

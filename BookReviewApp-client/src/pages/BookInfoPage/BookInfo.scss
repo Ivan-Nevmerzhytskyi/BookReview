@@ -1,0 +1,65 @@
+@use '../../common/styles/utils/variables' as *;
+@use '../../common/styles/utils/mixins' as *;
+
+.bookInfo {
+  padding-block: 96px;
+  background-color: var(--bg-page);
+
+  @include onTablet {
+    padding-block: 120px;
+  }
+
+  &__link {
+    display: inline-block;
+    width: max-content;
+    padding: 5px 15px;
+    background-color: var(--color-page);
+    border-radius: 40px;
+
+    color: var(--bg-page);
+    font-size: 16px;
+    line-height: 22px;
+    text-decoration: none;
+
+    cursor: pointer;
+    transition: box-shadow $effectDuration;
+
+    &:hover {
+      box-shadow: 3px 3px 20px var(--color-page);
+    }
+  }
+
+  &__content {
+    display: grid;
+    justify-items: center;
+    row-gap: 1em;
+
+    margin-block: 30px;
+    padding: 1em;
+    border: 1px solid #000;
+    border-radius: 10px;
+    background-color: #eee;
+    color: #000;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__user {
+    margin: 0;
+  }
+
+  &__description {
+    margin: 0;
+  }
+
+  &__vote {
+    display: flex;
+  }
+
+  &__comments {
+    justify-self: stretch;
+    text-align: center;
+  }
+}

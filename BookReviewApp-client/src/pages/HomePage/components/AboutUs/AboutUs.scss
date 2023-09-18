@@ -1,0 +1,26 @@
+@use '../../../../common/styles/utils/mixins' as *;
+
+.aboutUs {
+  &__title {
+    margin: 0 0 10px;
+    font-size: 18px;
+    font-style: italic;
+    text-align: center;
+
+    @include onTablet {
+      font-size: 20px;
+    }
+  }
+
+  &__description {
+    margin: 0;
+    font-size: 16px;
+    text-align: justify;
+    text-indent: 20px;
+    word-spacing: 2px;
+
+    @include onTablet {
+      font-size: 18px;
+    }
+  }
+}

@@ -1,0 +1,20 @@
+@use '../../../../common/styles/utils/mixins' as *;
+
+.booksSearch {
+  padding: 10px 20px;
+  background-color: var(--bg-page);
+  border: 1px dotted var(--color-page);
+  border-radius: 10px;
+
+  @include hover(box-shadow, 0 0 20px var(--color-page));
+
+  &__label {
+    display: inline-block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  &__input {
+    border-radius: 10px;
+  }
+}

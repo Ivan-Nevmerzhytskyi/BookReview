@@ -1,0 +1,26 @@
+@use '../../styles/utils/variables' as *;
+
+.themeSwitcher {
+  box-sizing: border-box;
+  width: 50px;
+  padding: 5px;
+  border-radius: 20px;
+  border: 1px solid var(--bg-page);
+  background-color: var(--color-page);
+  cursor: pointer;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 50%;
+    padding-bottom: 50%;
+    border-radius: 50%;
+    background-color: var(--bg-page);
+
+    transition: transform $effectDuration;
+  }
+
+  &--theme--dark::after {
+    transform: translateX(100%);
+  }
+}
