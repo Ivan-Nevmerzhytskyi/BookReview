@@ -4,7 +4,9 @@ export const getAll = async(req, res, next) => {
   try {
     const books = await bookService.getAll();
 
-    res.send(books); // automatically determines Content-Type(HTML, JSON)
+    res.send( // automatically determines Content-Type(HTML, JSON)
+      books.map(bookService.normalize),
+    );
   } catch (error) {
     next(error);
   }
@@ -21,7 +23,13 @@ export const getOne = async(req, res, next) => {
       return;
     }
 
-    res.send(foundBook);
+    res.send(
+      bookService.normalize(foundBook), // send only required properties
+    );
+    // res.send(foundBook.toJSON()); // send only own properties of table
+    // res.send( // send only own properties of table as string
+    //   JSON.stringify(foundBook, null, 2),
+    // );
   } catch (error) {
     next(error);
   }
@@ -50,7 +58,10 @@ export const add = async(req, res, next) => {
     });
 
     res.statusCode = 201;
-    res.send(newBook);
+
+    res.send(
+      bookService.normalize(newBook),
+    );
     // res.status(201).send(newTodo);
   } catch (error) {
     next(error);
@@ -117,7 +128,9 @@ export const update = async(req, res, next) => {
 
     const updatedBook = await bookService.getById(bookId);
 
-    res.send(updatedBook);
+    res.send(
+      bookService.normalize(updatedBook),
+    );
   } catch (error) {
     next(error);
   }

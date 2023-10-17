@@ -20,8 +20,8 @@ app.use(express.static('public')); // Send static files from 'public' directory
 // express.text() --> req.body as text
 // express.json() --> req.body as json
 // express.urlencoded({ extended: true }) --> req.body as object from HTML form
-app.use('/books', express.json(), booksRouter);
-app.use('/comments', express.json(), commentsRouter);
+app.use('/books', express.json({ limit: '5mb' }), booksRouter);
+app.use('/comments', express.json(), commentsRouter); // request default: 100kb
 app.use('/users', express.json(), usersRouter);
 app.use('/download', downloadRouter);
 

@@ -112,7 +112,9 @@ export const getOne = async(req, res, next) => {
       return;
     }
 
-    res.send(foundUser);
+    res.send(
+      userService.normalize(foundUser),
+    );
   } catch (error) {
     next(error);
   }
@@ -157,7 +159,9 @@ export const update = async(req, res, next) => {
       id: userId, name, username, email, password,
     });
 
-    res.send(updatedUser);
+    res.send(
+      userService.normalize(updatedUser),
+    );
   } catch (error) {
     next(error);
   }
@@ -195,7 +199,9 @@ export const updateBookRating = async(req, res, next) => {
       userId, bookRating,
     });
 
-    res.send(updatedUser);
+    res.send(
+      userService.normalize(updatedUser),
+    );
   } catch (error) {
     next(error);
   }
@@ -233,7 +239,9 @@ export const updateCommentVote = async(req, res, next) => {
       userId, commentVote,
     });
 
-    res.send(updatedUser);
+    res.send(
+      userService.normalize(updatedUser),
+    );
   } catch (error) {
     next(error);
   }

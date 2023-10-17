@@ -5,7 +5,9 @@ export const getAllByBookId = async(req, res, next) => {
     const { bookId } = req.query;
     const comments = await commentService.getAllByBookId(bookId);
 
-    res.send(comments);
+    res.send(
+      comments.map(commentService.normalize),
+    );
   } catch (error) {
     next(error);
   }
@@ -15,7 +17,9 @@ export const getAll = async(req, res, next) => {
   try {
     const comments = await commentService.getAll();
 
-    res.send(comments);
+    res.send(
+      comments.map(commentService.normalize),
+    );
   } catch (error) {
     next(error);
   }
@@ -32,7 +36,9 @@ export const getOne = async(req, res, next) => {
       return;
     }
 
-    res.send(foundComment);
+    res.send(
+      commentService.normalize(foundComment),
+    );
   } catch (error) {
     next(error);
   }
@@ -59,7 +65,10 @@ export const add = async(req, res, next) => {
     });
 
     res.statusCode = 201;
-    res.send(newComment);
+
+    res.send(
+      commentService.normalize(newComment),
+    );
   } catch (error) {
     next(error);
   }
@@ -106,7 +115,9 @@ export const update = async(req, res, next) => {
 
     const updatedComment = await commentService.update({ id: commentId, body });
 
-    res.send(updatedComment);
+    res.send(
+      commentService.normalize(updatedComment),
+    );
   } catch (error) {
     next(error);
   }
