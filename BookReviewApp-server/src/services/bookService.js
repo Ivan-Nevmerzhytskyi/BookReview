@@ -1,5 +1,5 @@
 // import { client } from '../utils/db.js'; // Using node-postgress
-import { sequelize } from '../utils/db.js'; // Using Sequelize
+import { client } from '../utils/db.js'; // Using Sequelize
 import { Book } from '../models/Book.js';
 import { Rating } from '../models/Rating.js';
 
@@ -36,11 +36,11 @@ export async function getAll() {
       'author',
       'description',
       [
-        sequelize.fn(
+        client.fn(
           'COALESCE',
-          sequelize.fn(
+          client.fn(
             'AVG',
-            sequelize.cast(sequelize.col('ratings.rating'), 'integer'),
+            client.cast(client.col('ratings.rating'), 'integer'),
           ),
           0,
         ),
@@ -51,10 +51,7 @@ export async function getAll() {
       //   sequelize.literal('COALESCE(AVG(ratings.rating::integer), 0)'),
       //   'averageRating',
       // ],
-      [
-        sequelize.fn('COUNT', sequelize.col('ratings.rating')),
-        'numberOfRatings',
-      ],
+      [client.fn('COUNT', client.col('ratings.rating')), 'numberOfRatings'],
     ],
     where: {
       // col: val <=> col: {[Op.eq]: val} // col=val
@@ -90,7 +87,7 @@ export async function getAll() {
     // logging: true, // default: display console.log() for such SQL query
   });
 
-  const result = booksModel.map(bookModel => {
+  const result = booksModel.map((bookModel) => {
     const { averageRating, numberOfRatings, ...rest } = bookModel.toJSON();
 
     return {
@@ -134,20 +131,17 @@ export async function getById(bookId) {
       'author',
       'description',
       [
-        sequelize.fn(
+        client.fn(
           'COALESCE',
-          sequelize.fn(
+          client.fn(
             'AVG',
-            sequelize.cast(sequelize.col('ratings.rating'), 'integer'),
+            client.cast(client.col('ratings.rating'), 'integer'),
           ),
           0,
         ),
         'averageRating',
       ],
-      [
-        sequelize.fn('COUNT', sequelize.col('ratings.rating')),
-        'numberOfRatings',
-      ],
+      [client.fn('COUNT', client.col('ratings.rating')), 'numberOfRatings'],
     ],
     where: {
       id: bookId,
@@ -197,11 +191,13 @@ export async function getById(bookId) {
   */
 }
 
-export async function create({
-  userId, coverSrc, title, author, description,
-}) {
+export async function create({ userId, coverSrc, title, author, description }) {
   const newBook = await Book.create({
-    userId, coverSrc, title, author, description,
+    userId,
+    coverSrc,
+    title,
+    author,
+    description,
   });
   const result = await getById(newBook.id);
 
@@ -236,15 +232,19 @@ export async function remove(bookId) {
   */
 }
 
-export async function update({
-  id, coverSrc, title, author, description,
-}) {
-  return Book.update({
-    // column: undefined => such column is ignored in query
-    coverSrc, title, author, description,
-  }, {
-    where: { id },
-  });
+export async function update({ id, coverSrc, title, author, description }) {
+  return Book.update(
+    {
+      // column: undefined => such column is ignored in query
+      coverSrc,
+      title,
+      author,
+      description,
+    },
+    {
+      where: { id },
+    },
+  );
 
   /* Using node-postgress:
   await client.query(`
@@ -338,14 +338,20 @@ export async function updateMany(books) {
   */
 
   // Variant 2: Managed transactions:
-  return sequelize.transaction(async(t) => {
+  return client.transaction(async(t) => {
     for (const { id, coverSrc, title, author, description } of books) {
-      await Book.update({
-        coverSrc, title, author, description,
-      }, {
-        where: { id },
-        transaction: t,
-      });
+      await Book.update(
+        {
+          coverSrc,
+          title,
+          author,
+          description,
+        },
+        {
+          where: { id },
+          transaction: t,
+        },
+      );
     }
   });
 

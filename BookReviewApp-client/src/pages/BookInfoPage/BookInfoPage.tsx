@@ -8,8 +8,8 @@ import './BookInfo.scss';
 import { UserType } from '../../common/types/UserType';
 import { CommentType } from '../../common/types/CommentType';
 import { useAppSelector } from '../../customHooks/reduxHooks';
-import * as userService from '../../services/users';
-import * as commentService from '../../services/comments';
+import * as userService from '../../services/userService';
+import * as commentService from '../../services/commentService';
 
 import { Carousel } from './components/Carousel';
 import { UserInfo } from './components/UserInfo';
@@ -24,13 +24,13 @@ export const BookInfoPage: React.FC = React.memo(() => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { books } = useAppSelector(state => state.books);
+  const { books } = useAppSelector((state) => state.books);
   const { state } = useLocation();
   const navigate = useNavigate();
   const { bookId } = useParams();
   // const normalizedBookId = bookId ? +bookId : 0; // when bookId is integer
   const selectedBook = useMemo(
-    () => books.find(book => book.id === bookId) || null,
+    () => books.find((book) => book.id === bookId) || null,
     [books, bookId],
   );
 
@@ -124,18 +124,13 @@ export const BookInfoPage: React.FC = React.memo(() => {
 
               <div className="bookInfo__vote">
                 Your vote:&nbsp;
-                <Rate
-                  bookId={selectedBook.id}
-                />
+                <Rate bookId={selectedBook.id} />
               </div>
 
               {loading && <Loader />}
 
               {!loading && comments.length > 0 && (
-                <CommentList
-                  comments={comments}
-                  onUpdate={updateComment}
-                />
+                <CommentList comments={comments} onUpdate={updateComment} />
               )}
 
               {!loading && !errorMessage && comments.length === 0 && (

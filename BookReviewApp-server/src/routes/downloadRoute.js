@@ -4,10 +4,10 @@ import fs from 'fs';
 import zlib from 'zlib';
 // import { pipeline } from 'stream';
 
-export const router = express.Router();
+export const downloadRouter = express.Router();
 
 // for downloading a fileName in client side
-router.get('/:fileName', async(req, res) => {
+downloadRouter.get('/:fileName', async(req, res) => {
   const { fileName } = req.params;
   const filePath = path.resolve('download', fileName);
 

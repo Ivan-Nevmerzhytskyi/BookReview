@@ -1,25 +1,30 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../utils/db.js';
+import { client } from '../utils/db.js';
 import { User } from './User.js';
 import { Comment } from './Comment.js';
 
-export const Vote = sequelize.define('vote', {
-  id: {
-    type: DataTypes.UUID,
-    primaryKey: true,
-    defaultValue: DataTypes.UUIDV4,
-    unique: true,
-  },
-  vote: {
-    type: DataTypes.STRING,
-    validate: { // like CHECH constraint but only by JS (don't added in DB)
-      isIn: [['like', 'dislike']],
+export const Vote = client.define(
+  'vote',
+  {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+      unique: true,
+    },
+    vote: {
+      type: DataTypes.STRING,
+      validate: {
+        // like CHECH constraint but only by JS (don't added in DB)
+        isIn: [['like', 'dislike']],
+      },
     },
   },
-}, {
-  tableName: 'votes',
-  underscored: true,
-});
+  {
+    tableName: 'votes',
+    underscored: true,
+  },
+);
 
 // 'Rating' model has 2 foreign keys: 'user_id' and 'comment_id'
 User.belongsToMany(Comment, {

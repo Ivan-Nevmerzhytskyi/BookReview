@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import './CommentInfo.scss';
 import { CommentType } from '../../../../common/types/CommentType';
 import { AuthContext } from '../../../../store/AuthContext';
-import * as commentService from '../../../../services/comments';
-import * as userService from '../../../../services/users';
+import * as commentService from '../../../../services/commentService';
+import * as userService from '../../../../services/userService';
 import { Icon } from '../../../../common/components/Icon';
 import { Loader } from '../../../../common/components/Loader';
 import {
@@ -28,8 +28,9 @@ export const CommentInfo = React.memo<Props>(({ comment, onUpdate }) => {
 
   // set the user's vote of the comment when the page is loaded
   useEffect(() => {
-    const userVote = user?.commentsVote
-      .find(commentVote => commentVote.commentId === id);
+    const userVote = user?.commentsVote.find(
+      (commentVote) => commentVote.commentId === id,
+    );
 
     setVote(userVote ? userVote.vote : null);
   }, [user?.id]);
@@ -44,11 +45,12 @@ export const CommentInfo = React.memo<Props>(({ comment, onUpdate }) => {
     setUpdating(true);
     setErrorMessage('');
 
-    const commentVote = (voteType === vote)
+    const commentVote = voteType === vote
       ? { commentId: id, vote: null }
       : { commentId: id, vote: voteType };
 
-    userService.updateUserCommentVote(user.id, commentVote)
+    userService
+      .updateUserCommentVote(user.id, commentVote)
       .then(setUser)
       .then(() => commentService.updateComment({ id }))
       .then(onUpdate)
@@ -87,10 +89,9 @@ export const CommentInfo = React.memo<Props>(({ comment, onUpdate }) => {
         ) : (
           <Icon
             href="#like"
-            className={classNames(
-              'icon--like',
-              { 'icon--like-active': vote === 'like' },
-            )}
+            className={classNames('icon--like', {
+              'icon--like-active': vote === 'like',
+            })}
             onClick={() => handleCommentVote('like')}
           />
         )}
@@ -101,10 +102,9 @@ export const CommentInfo = React.memo<Props>(({ comment, onUpdate }) => {
         ) : (
           <Icon
             href="#dislike"
-            className={classNames(
-              'icon--dislike',
-              { 'icon--dislike-active': vote === 'dislike' },
-            )}
+            className={classNames('icon--dislike', {
+              'icon--dislike-active': vote === 'dislike',
+            })}
             onClick={() => handleCommentVote('dislike')}
           />
         )}

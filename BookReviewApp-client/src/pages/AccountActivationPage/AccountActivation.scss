@@ -1,0 +1,27 @@
+@use '../../common/styles/utils/mixins' as *;
+
+.accountActivation {
+  padding-block: 96px;
+  background-color: var(--bg-page);
+  border-radius: 50px 50px 0 0;
+
+  @include onTablet {
+    padding-block: 120px;
+  }
+
+  &__notification {
+    border-radius: 6px;
+    padding: 20px;
+    text-align: center;
+
+    &--is-success {
+      background-color: #effaf5;
+      color: #257953;
+    }
+
+    &--is-error {
+      background-color: #feecf0;
+      color: #cc0f35;
+    }
+  }
+}

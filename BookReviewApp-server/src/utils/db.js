@@ -3,18 +3,17 @@
 import 'dotenv/config';
 import { Sequelize } from 'sequelize';
 
-export const sequelize = new Sequelize(
-  process.env.POSTGRES_DATABASE,
-  process.env.POSTGRES_USER,
-  process.env.POSTGRES_PASSWORD,
-  {
-    host: process.env.POSTGRES_HOST,
-    dialect: 'postgres',
-  },
-);
+export const client = new Sequelize({
+  host: process.env.POSTGRES_HOST,
+  database: process.env.POSTGRES_DATABASE,
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  dialect: 'postgres',
+  // logging: false,
+});
 
 try {
-  await sequelize.authenticate(); // Testing the connection(not required)
+  await client.authenticate(); // Testing the connection(not required)
   console.log('Connection has been established successfully.');
 } catch (error) {
   console.error('Unable to connect to the database:', error);

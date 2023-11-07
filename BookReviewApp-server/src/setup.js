@@ -27,34 +27,38 @@ try {
 }
 // #endregion
 
+// #region Setup tables in DB using Sequelize
 const { Book } = await import('./models/Book.js');
 const { User } = await import('./models/User.js');
 const { Comment } = await import('./models/Comment.js');
 const { Rating } = await import('./models/Rating.js');
 const { Vote } = await import('./models/Vote.js');
+const { Token } = await import('./models/Token.js');
 
-// #region Setup tables in DB using Sequelize
-// Creates table if it doesn't exist (and does nothing if it already exists):
-// await Book.sync();
-
-// Creates the table in DB from model, dropping it first if it already existed
-await User.sync({ force: true });
-await Book.sync({ force: true });
-await Comment.sync({ force: true });
-await Rating.sync({ force: true });
-await Vote.sync({ force: true });
-console.log('The tables for models was just (re)created!');
+const { client } = await import('./utils/db.js');
 
 // automatically synchronize all models:
-// await sequelize.sync({ force: true });
-// console.log('All models were synchronized successfully.');
+await client.sync({ force: true });
+console.log('All models were synchronized successfully.');
+
+// Creates the table in DB from model, dropping it first if it already existed
+// await User.sync({ force: true });
+// await Book.sync({ force: true });
+// await Comment.sync({ force: true });
+// await Rating.sync({ force: true });
+// await Vote.sync({ force: true });
+// await Token.sync({ force: true });
+// console.log('The tables for models was just (re)created!');
+
+// Creates table if it doesn't exist (and does nothing if it already exists):
+// await Book.sync();
 
 // To drop the table related to a model:
 // await Book.drop();
 // console.log('Book table dropped!');
 
 // To drop all tables:
-// await sequelize.drop();
+// await client.drop();
 // console.log('All tables dropped!');
 // #endregion
 

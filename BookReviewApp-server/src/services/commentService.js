@@ -1,14 +1,17 @@
 // import { client } from '../utils/db.js'; // Using node-postgress
-import { sequelize } from '../utils/db.js'; // Using Sequelize
+import { client } from '../utils/db.js'; // Using Sequelize
 import { Comment } from '../models/Comment.js';
 import { Vote } from '../models/Vote.js';
 import { User } from '../models/User.js';
 
-export function normalize({
-  id, bookId, body, username, email, votes,
-}) {
+export function normalize({ id, bookId, body, username, email, votes }) {
   return {
-    id, bookId, body, username, email, votes,
+    id,
+    bookId,
+    body,
+    username,
+    email,
+    votes,
   };
 }
 
@@ -19,19 +22,25 @@ export async function getAllByBookId(idOfBook) {
       'bookId',
       'body',
       [
-        sequelize.literal(`(SELECT users.username FROM users WHERE users.id=comment.user_id)`),
+        client.literal(
+          `(SELECT users.username FROM users WHERE users.id=comment.user_id)`,
+        ),
         'username',
       ],
       [
-        sequelize.literal(`(SELECT users.email FROM users WHERE users.id=comment.user_id)`),
+        client.literal(
+          `(SELECT users.email FROM users WHERE users.id=comment.user_id)`,
+        ),
         'email',
       ],
       [
-        sequelize.literal(`SUM(CASE WHEN votes.vote = 'like' THEN 1 ELSE 0 END)`),
+        client.literal(`SUM(CASE WHEN votes.vote = 'like' THEN 1 ELSE 0 END)`),
         'like',
       ],
       [
-        sequelize.literal(`COUNT(votes.vote) FILTER (WHERE votes.vote = 'dislike')`),
+        client.literal(
+          `COUNT(votes.vote) FILTER (WHERE votes.vote = 'dislike')`,
+        ),
         'dislike',
       ],
     ],
@@ -46,7 +55,7 @@ export async function getAllByBookId(idOfBook) {
     order: [['createdAt', 'DESC']],
   });
 
-  const result = commentsModel.map(commentModel => {
+  const result = commentsModel.map((commentModel) => {
     const {
       id, bookId, body, username, email, like, dislike,
     } = commentModel.toJSON();
@@ -98,19 +107,25 @@ export async function getAll() {
       'bookId',
       'body',
       [
-        sequelize.literal(`(SELECT users.username FROM users WHERE users.id=comment.user_id)`),
+        client.literal(
+          `(SELECT users.username FROM users WHERE users.id=comment.user_id)`,
+        ),
         'username',
       ],
       [
-        sequelize.literal(`(SELECT users.email FROM users WHERE users.id=comment.user_id)`),
+        client.literal(
+          `(SELECT users.email FROM users WHERE users.id=comment.user_id)`,
+        ),
         'email',
       ],
       [
-        sequelize.literal(`SUM(CASE WHEN votes.vote = 'like' THEN 1 ELSE 0 END)`),
+        client.literal(`SUM(CASE WHEN votes.vote = 'like' THEN 1 ELSE 0 END)`),
         'like',
       ],
       [
-        sequelize.literal(`COUNT(votes.vote) FILTER (WHERE votes.vote = 'dislike')`),
+        client.literal(
+          `COUNT(votes.vote) FILTER (WHERE votes.vote = 'dislike')`,
+        ),
         'dislike',
       ],
     ],
@@ -122,7 +137,7 @@ export async function getAll() {
     order: [['createdAt', 'DESC']],
   });
 
-  const result = commentsModel.map(commentModel => {
+  const result = commentsModel.map((commentModel) => {
     const {
       id, bookId, body, username, email, like, dislike,
     } = commentModel.toJSON();
@@ -173,19 +188,25 @@ export async function getById(commentId) {
       'bookId',
       'body',
       [
-        sequelize.literal(`(SELECT users.username FROM users WHERE users.id=comment.user_id)`),
+        client.literal(
+          `(SELECT users.username FROM users WHERE users.id=comment.user_id)`,
+        ),
         'username',
       ],
       [
-        sequelize.literal(`(SELECT users.email FROM users WHERE users.id=comment.user_id)`),
+        client.literal(
+          `(SELECT users.email FROM users WHERE users.id=comment.user_id)`,
+        ),
         'email',
       ],
       [
-        sequelize.literal(`SUM(CASE WHEN votes.vote = 'like' THEN 1 ELSE 0 END)`),
+        client.literal(`SUM(CASE WHEN votes.vote = 'like' THEN 1 ELSE 0 END)`),
         'like',
       ],
       [
-        sequelize.literal(`COUNT(votes.vote) FILTER (WHERE votes.vote = 'dislike')`),
+        client.literal(
+          `COUNT(votes.vote) FILTER (WHERE votes.vote = 'dislike')`,
+        ),
         'dislike',
       ],
     ],

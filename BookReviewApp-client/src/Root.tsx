@@ -8,10 +8,11 @@ import store from './store/ReduxStore';
 
 import { App } from './App';
 import { HomePage } from './pages/HomePage';
+import { RequireAuth } from './pages/AuthPage/components/RequireAuth';
 import { AuthPage } from './pages/AuthPage';
+import { AccountActivationPage } from './pages/AccountActivationPage';
 import { CollectionPage } from './pages/CollectionPage';
 import { BookInfoPage } from './pages/BookInfoPage';
-import { RequireAuth } from './pages/AuthPage/components/RequireAuth';
 import { UserPage } from './pages/UserPage';
 import { AddBookPage } from './pages/AddBookPage';
 import { NotFoundPage } from './pages/NotFoundPage';
@@ -26,6 +27,10 @@ export const Root = () => (
             <Route index element={<HomePage />} />
             <Route path="home" element={<Navigate to="/" replace />} />
             <Route path="auth" element={<AuthPage />} />
+            <Route
+              path="activate/:activationToken"
+              element={<AccountActivationPage />}
+            />
 
             <Route path="books">
               <Route index element={<CollectionPage />} />

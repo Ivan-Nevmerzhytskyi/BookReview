@@ -3,7 +3,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppDispatch } from '../ReduxStore';
 import { BookType } from '../../common/types/BookType';
-import * as bookService from '../../services/books';
+import * as bookService from '../../services/bookService';
 
 type BooksState = {
   books: BookType[];

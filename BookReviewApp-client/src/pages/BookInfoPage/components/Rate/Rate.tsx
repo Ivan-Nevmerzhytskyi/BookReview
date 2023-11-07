@@ -4,7 +4,7 @@ import './Rate.scss';
 import { useAppDispatch } from '../../../../customHooks/reduxHooks';
 import { AuthContext } from '../../../../store/AuthContext';
 import * as booksActions from '../../../../store/features/books';
-import * as userService from '../../../../services/users';
+import * as userService from '../../../../services/userService';
 import {
   ErrorNotification,
 } from '../../../../common/components/ErrorNotification';
@@ -22,8 +22,9 @@ export const Rate = React.memo<Props>(({ bookId }) => {
 
   // set the user's rating of the book when the page is loaded
   useEffect(() => {
-    const userRating = user?.booksRating
-      .find(bookRating => bookRating.bookId === bookId);
+    const userRating = user?.booksRating.find(
+      (bookRating) => bookRating.bookId === bookId,
+    );
 
     setStars(userRating ? userRating.rating : null);
   }, [user?.id]);
@@ -40,11 +41,12 @@ export const Rate = React.memo<Props>(({ bookId }) => {
     setUpdating(true);
     setErrorMessage('');
 
-    const bookRating = (value === stars)
+    const bookRating = value === stars
       ? { bookId, rating: null }
       : { bookId, rating: value };
 
-    userService.updateUserBookRating(user.id, bookRating)
+    userService
+      .updateUserBookRating(user.id, bookRating)
       .then(setUser)
       .then(() => dispatch(booksActions.updateBook({ id: bookId })).unwrap())
       .then(() => {

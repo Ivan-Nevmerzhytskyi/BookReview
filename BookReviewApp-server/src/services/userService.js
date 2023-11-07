@@ -1,4 +1,8 @@
 // import { client } from '../utils/db.js'; // Using node-postgress
+import bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid';
+
+import { emailService } from './emailService.js';
 import { User } from '../models/User.js';
 import { Rating } from '../models/Rating.js';
 import { Vote } from '../models/Vote.js';
@@ -11,22 +15,58 @@ export function normalize({
   };
 }
 
-// export async function registration({ name, username, email, password }) {
-//   const newUser = await User.create({
-//     name, username, email, password,
-//   });
-//   const result = await getById(newUser.id);
+export async function register({ name, username, email, password }) {
+  const activationToken = uuidv4();
+  const hashedPass = await bcrypt.hash(password, 10);
 
-//   return result;
-// }
+  await User.create({
+    name,
+    username,
+    email,
+    password: hashedPass,
+    activationToken,
+  });
 
-// export async function login({ email, password }) {
-//   const result = await User.findOne({
-//     where: { email, password }
-//   });
+  await emailService.sendActivationLink(email, activationToken);
+}
 
-//   return getById(result.id);
-// }
+export async function getByActivationToken(activationToken) {
+  return User.findOne({
+    attributes: ['id', 'name', 'username', 'email', 'activationToken'],
+    where: { activationToken },
+    include: [
+      {
+        model: Rating,
+        as: 'booksRating',
+        attributes: ['bookId', 'rating'],
+      },
+      {
+        model: Vote,
+        as: 'commentsVote',
+        attributes: ['commentId', 'vote'],
+      },
+    ],
+  });
+}
+
+export async function getByEmail(email) {
+  return User.findOne({
+    attributes: ['id', 'name', 'username', 'email', 'password'],
+    where: { email },
+    include: [
+      {
+        model: Rating,
+        as: 'booksRating',
+        attributes: ['bookId', 'rating'],
+      },
+      {
+        model: Vote,
+        as: 'commentsVote',
+        attributes: ['commentId', 'vote'],
+      },
+    ],
+  });
+}
 
 export async function getById(userId) {
   return User.findOne({
